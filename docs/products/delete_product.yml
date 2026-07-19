@@ -1,0 +1,59 @@
+tags:
+  - Products
+
+summary: Delete a product
+
+description: |
+  Deletes a product belonging to the authenticated administrator.
+
+  **Authentication Required**
+
+  Only administrators can delete products.
+
+security:
+  - Bearer: []
+
+produces:
+  - application/json
+
+parameters:
+  - in: path
+    name: product_id
+    type: integer
+    required: true
+    description: ID of the product to delete
+    example: 1
+
+responses:
+  200:
+    description: Product deleted successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Product deleted
+
+  401:
+    description: Authentication required
+
+  403:
+    description: Admin privileges required
+
+  404:
+    description: Product not found
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Product not found
+
+  500:
+    description: Database error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Database error occurred

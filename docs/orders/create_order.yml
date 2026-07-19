@@ -1,0 +1,47 @@
+tags:
+  - Orders
+
+summary: Create a new order
+
+description: |
+  Creates a new order for the authenticated user.
+
+  A newly created order has no items initially.
+  Products can be added later using the **Add Order Item** endpoint.
+
+security:
+  - Bearer: []
+
+produces:
+  - application/json
+
+responses:
+  201:
+    description: Order created successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Order created successfully for order_id - 15.
+
+  400:
+    description: Unable to create order
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Error creating order
+
+  401:
+    description: Authentication required
+
+  500:
+    description: Database error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Error creating order

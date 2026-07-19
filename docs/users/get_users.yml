@@ -1,0 +1,55 @@
+tags:
+  - Users
+
+summary: Get all users
+
+description: |
+  Retrieves all users from the database.
+
+  This endpoint returns every record present in the USERS table.
+
+produces:
+  - application/json
+
+responses:
+  200:
+    description: List of users retrieved successfully
+    schema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+
+          name:
+            type: string
+            example: Ali Abbas
+
+          email:
+            type: string
+            format: email
+            example: ali@example.com
+
+          phone_number:
+            type: string
+            example: "9876543210"
+
+  404:
+    description: No users found
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: not found any data
+
+  500:
+    description: Database error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Search data was not found

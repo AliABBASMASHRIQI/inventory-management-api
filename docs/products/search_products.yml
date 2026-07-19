@@ -1,0 +1,182 @@
+tags:
+  - Products
+
+summary: Search products
+
+description: |
+  Searches products belonging to the authenticated user.
+
+  Supports filtering, pagination and sorting.
+
+  Available Filters:
+  - name
+  - quantity
+  - minimum price
+  - maximum price
+  - created date range
+  - updated date range
+
+security:
+  - Bearer: []
+
+produces:
+  - application/json
+
+parameters:
+  - in: query
+    name: name
+    type: string
+    required: false
+    description: Filter products by exact name
+    example: iPhone 16 Pro
+
+  - in: query
+    name: quantity
+    type: integer
+    required: false
+    description: Filter by quantity
+    example: 20
+
+  - in: query
+    name: min_price
+    type: number
+    format: float
+    required: false
+    description: Minimum product price
+    example: 1000
+
+  - in: query
+    name: max_price
+    type: number
+    format: float
+    required: false
+    description: Maximum product price
+    example: 50000
+
+  - in: query
+    name: created_after
+    type: string
+    format: date-time
+    required: false
+    description: Products created after this date
+    example: "2026-01-01 00:00:00"
+
+  - in: query
+    name: created_before
+    type: string
+    format: date-time
+    required: false
+    description: Products created before this date
+    example: "2026-12-31 23:59:59"
+
+  - in: query
+    name: updated_after
+    type: string
+    format: date-time
+    required: false
+    description: Products updated after this date
+    example: "2026-01-01 00:00:00"
+
+  - in: query
+    name: updated_before
+    type: string
+    format: date-time
+    required: false
+    description: Products updated before this date
+    example: "2026-12-31 23:59:59"
+
+  - in: query
+    name: page
+    type: integer
+    required: false
+    default: 1
+    description: Page number
+    example: 1
+
+  - in: query
+    name: sort
+    type: string
+    required: false
+    default: id
+    enum:
+      - id
+      - name
+      - price
+      - quantity
+      - created_at
+      - updated_at
+    description: Field used for sorting
+
+  - in: query
+    name: order
+    type: string
+    required: false
+    default: asc
+    enum:
+      - asc
+      - desc
+    description: Sort direction
+
+responses:
+  200:
+    description: Products retrieved successfully
+    schema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+
+          name:
+            type: string
+            example: iPhone 16 Pro
+
+          description:
+            type: string
+            example: Apple flagship smartphone
+
+          price:
+            type: number
+            format: float
+            example: 99999.99
+
+          quantity:
+            type: integer
+            example: 25
+
+          user_id:
+            type: integer
+            example: 3
+
+          created_at:
+            type: string
+            format: date-time
+            example: "2026-07-18T10:30:00"
+
+          updated_at:
+            type: string
+            format: date-time
+            example: "2026-07-18T10:30:00"
+
+  400:
+    description: Invalid search parameters
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Invalid sort field
+
+  401:
+    description: Authentication required
+
+  500:
+    description: Database error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Database error occurred

@@ -1,0 +1,1 @@
+Use @swag_from('../docs/<folder>/<file>.yml') above each route.

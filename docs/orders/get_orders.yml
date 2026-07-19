@@ -1,0 +1,54 @@
+tags:
+  - Orders
+
+summary: Get all orders
+
+description: |
+  Retrieves all orders belonging to the authenticated user.
+
+  **Authentication Required**
+
+  Only the currently logged-in user's orders are returned.
+
+security:
+  - Bearer: []
+
+produces:
+  - application/json
+
+responses:
+  200:
+    description: Orders retrieved successfully
+    schema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 15
+
+          user_id:
+            type: integer
+            example: 3
+
+          status:
+            type: string
+            example: pending
+
+          created_at:
+            type: string
+            format: date-time
+            example: "2026-07-18T14:25:30"
+
+  401:
+    description: Authentication required
+
+  500:
+    description: Database error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Error in Displaying all orders

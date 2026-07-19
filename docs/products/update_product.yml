@@ -1,0 +1,108 @@
+tags:
+  - Products
+
+summary: Update a product
+
+description: |
+  Updates one or more fields of an existing product.
+
+  **Authentication Required**
+
+  Only administrators can update products.
+
+  Any combination of the following fields may be updated:
+  - name
+  - description
+  - price
+  - quantity
+
+  Validation Rules:
+  - Name cannot be empty.
+  - Description cannot be empty.
+  - Price must be a non-negative number.
+  - Quantity must be greater than 0.
+  - At least one field must be provided.
+
+security:
+  - Bearer: []
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+parameters:
+  - in: path
+    name: product_id
+    type: integer
+    required: true
+    description: ID of the product to update
+    example: 1
+
+  - in: body
+    name: body
+    required: true
+    description: Product fields to update
+    schema:
+      type: object
+      properties:
+        name:
+          type: string
+          example: iPhone 16 Pro Max
+
+        description:
+          type: string
+          example: Updated flagship smartphone
+
+        price:
+          type: number
+          format: float
+          example: 109999.99
+
+        quantity:
+          type: integer
+          example: 25
+
+responses:
+  200:
+    description: Product updated successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Product updated
+
+  400:
+    description: Validation error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Price must be non-negative
+
+  401:
+    description: Authentication required
+
+  403:
+    description: Admin privileges required
+
+  404:
+    description: Product not found
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Product not found
+
+  500:
+    description: Database error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Database error occurred

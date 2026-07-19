@@ -1,0 +1,82 @@
+tags:
+  - Orders
+
+summary: Update an order
+
+description: |
+  Updates the status of an existing order.
+
+  **Authentication Required**
+
+  Allowed status values:
+  - pending
+  - completed
+  - cancelled
+
+security:
+  - Bearer: []
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+parameters:
+  - in: path
+    name: id
+    type: integer
+    required: true
+    description: ID of the order to update
+    example: 15
+
+  - in: body
+    name: body
+    required: true
+    description: New order status
+    schema:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum:
+            - pending
+            - completed
+            - cancelled
+          example: completed
+
+responses:
+  200:
+    description: Order updated successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Order Updated
+
+  400:
+    description: Invalid status or update failed
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Only pending, completed or cancelled are allowed
+
+  401:
+    description: Authentication required
+
+  404:
+    description: Order not found
+
+  500:
+    description: Database error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Error in Updating Order

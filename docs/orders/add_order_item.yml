@@ -1,0 +1,95 @@
+tags:
+  - Orders
+
+summary: Add a product to an order
+
+description: |
+  Adds a product to an existing order.
+
+  **Authentication Required**
+
+  Validation performed:
+  - Order must belong to the authenticated user.
+  - Product must exist.
+  - Quantity must be greater than 0.
+  - Sufficient stock must be available.
+
+  If successful:
+  - A new order item is created.
+  - Product stock is automatically reduced.
+
+security:
+  - Bearer: []
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+parameters:
+  - in: path
+    name: order_id
+    type: integer
+    required: true
+    description: ID of the order
+    example: 15
+
+  - in: body
+    name: body
+    required: true
+    description: Product details to add to the order
+    schema:
+      type: object
+      required:
+        - product_id
+        - quantity
+      properties:
+        product_id:
+          type: integer
+          example: 3
+
+        quantity:
+          type: integer
+          minimum: 1
+          example: 2
+
+responses:
+  201:
+    description: Product added successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Product added to order successfully
+
+  400:
+    description: Invalid request or insufficient stock
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Not enough stock available
+
+  401:
+    description: Authentication required
+
+  404:
+    description: Order or product not found
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Product not found
+
+  500:
+    description: Database error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Database error occurred

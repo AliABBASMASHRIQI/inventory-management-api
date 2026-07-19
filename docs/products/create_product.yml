@@ -1,0 +1,88 @@
+tags:
+  - Products
+
+summary: Create a new product
+
+description: |
+  Creates a new product for the currently authenticated administrator.
+
+  **Authentication Required**
+
+  Only users with the **Admin** role can create products.
+
+  Validation Rules:
+  - Name cannot be empty.
+  - Price must be greater than or equal to 0.
+  - Quantity must be greater than 0.
+
+security:
+  - Bearer: []
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+parameters:
+  - in: body
+    name: body
+    required: true
+    description: Product information
+    schema:
+      type: object
+      required:
+        - name
+        - price
+        - quantity
+      properties:
+        name:
+          type: string
+          example: iPhone 16 Pro
+
+        description:
+          type: string
+          example: Apple flagship smartphone
+
+        price:
+          type: number
+          format: float
+          example: 99999.99
+
+        quantity:
+          type: integer
+          example: 20
+
+responses:
+  201:
+    description: Product created successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Product added
+
+  400:
+    description: Validation error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Invalid price
+
+  401:
+    description: Authentication required
+
+  403:
+    description: Admin privileges required
+
+  500:
+    description: Database error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Database error occurred

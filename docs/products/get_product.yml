@@ -1,0 +1,85 @@
+tags:
+  - Products
+
+summary: Get a product by ID
+
+description: |
+  Retrieves a single product belonging to the authenticated user.
+
+  The product must belong to the currently logged-in user.
+
+security:
+  - Bearer: []
+
+produces:
+  - application/json
+
+parameters:
+  - in: path
+    name: product_id
+    type: integer
+    required: true
+    description: Unique ID of the product
+    example: 1
+
+responses:
+  200:
+    description: Product retrieved successfully
+    schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+
+        name:
+          type: string
+          example: iPhone 16 Pro
+
+        description:
+          type: string
+          example: Apple flagship smartphone
+
+        price:
+          type: number
+          format: float
+          example: 99999.99
+
+        quantity:
+          type: integer
+          example: 20
+
+        user_id:
+          type: integer
+          example: 3
+
+        created_at:
+          type: string
+          format: date-time
+          example: "2026-07-18T10:30:00"
+
+        updated_at:
+          type: string
+          format: date-time
+          example: "2026-07-18T10:30:00"
+
+  401:
+    description: Authentication required
+
+  404:
+    description: Product not found
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Product not found
+
+  500:
+    description: Database error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Database error occurred

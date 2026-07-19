@@ -1,0 +1,89 @@
+tags:
+  - Users
+
+summary: Update a user
+
+description: |
+  Updates one or more fields of an existing user.
+
+  Any combination of the following fields can be updated:
+  - name
+  - email
+  - phone_number
+
+  Validation Rules:
+  - Name cannot be empty.
+  - Email must be valid and unique.
+  - Phone number must contain exactly 10 digits and be unique.
+  - At least one field must be provided.
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+parameters:
+  - in: path
+    name: user_id
+    type: integer
+    required: true
+    description: ID of the user to update
+    example: 1
+
+  - in: body
+    name: body
+    required: true
+    description: Fields to update
+    schema:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Ali Abbas
+
+        email:
+          type: string
+          format: email
+          example: ali@example.com
+
+        phone_number:
+          type: string
+          example: "9876543210"
+
+responses:
+  200:
+    description: User updated successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Data has been updated
+
+  400:
+    description: Invalid input or duplicate data
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Email already exists
+
+  404:
+    description: User not found
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: User not found
+
+  500:
+    description: Database error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Database error occurred

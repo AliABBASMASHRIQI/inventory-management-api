@@ -1,0 +1,42 @@
+tags:
+  - Authentication
+
+summary: Refresh access token
+
+description: |
+  Generates a new access token using a valid refresh token.
+
+  **Authentication Required**
+
+  This endpoint accepts a **refresh token**, not an access token.
+
+security:
+  - Bearer: []
+
+produces:
+  - application/json
+
+responses:
+  200:
+    description: Access token generated successfully
+    schema:
+      type: object
+      properties:
+        access_token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+  401:
+    description: Invalid or expired refresh token
+
+  422:
+    description: Wrong token type
+    schema:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: Only refresh tokens are allowed
+
+  500:
+    description: Internal server error

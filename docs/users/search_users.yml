@@ -1,0 +1,83 @@
+tags:
+  - Users
+
+summary: Search users
+
+description: |
+  Searches users based on one or more query parameters.
+
+  Any combination of the following filters can be used:
+  - name
+  - email
+  - phone_number
+
+  If no query parameters are provided, all users are returned.
+
+produces:
+  - application/json
+
+parameters:
+  - in: query
+    name: name
+    type: string
+    required: false
+    description: Search by user's name
+    example: Ali Abbas
+
+  - in: query
+    name: email
+    type: string
+    format: email
+    required: false
+    description: Search by user's email
+    example: ali@example.com
+
+  - in: query
+    name: phone_number
+    type: string
+    required: false
+    description: Search by user's phone number
+    example: "9876543210"
+
+responses:
+  200:
+    description: Users found successfully
+    schema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+
+          name:
+            type: string
+            example: Ali Abbas
+
+          email:
+            type: string
+            format: email
+            example: ali@example.com
+
+          phone_number:
+            type: string
+            example: "9876543210"
+
+  404:
+    description: No users found
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: No users found
+
+  500:
+    description: Database error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Database error occurred

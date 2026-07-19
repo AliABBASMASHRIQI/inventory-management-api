@@ -1,0 +1,78 @@
+tags:
+  - Users
+
+summary: Create a new user
+
+description: |
+  Registers a new user in the system.
+
+  Validation Rules:
+  - Name cannot be empty.
+  - Email must be valid and unique.
+  - Phone number must contain exactly 10 digits and be unique.
+  - Password is encrypted using bcrypt before storing.
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+parameters:
+  - in: body
+    name: body
+    required: true
+    description: User details
+    schema:
+      type: object
+      required:
+        - name
+        - email
+        - phone_number
+        - password
+      properties:
+        name:
+          type: string
+          example: Ali Abbas
+
+        email:
+          type: string
+          format: email
+          example: ali@example.com
+
+        phone_number:
+          type: string
+          example: "9876543210"
+
+        password:
+          type: string
+          format: password
+          example: MyPassword123
+
+responses:
+  201:
+    description: User created successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: USER has been INserted
+
+  400:
+    description: Invalid input or duplicate data
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Email already exists
+
+  500:
+    description: Internal server error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: No user has been Inserted because of Faulty data

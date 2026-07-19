@@ -1,0 +1,59 @@
+tags:
+  - Users
+
+summary: Get a user by ID
+
+description: |
+  Retrieves a single user using the user's unique ID.
+
+produces:
+  - application/json
+
+parameters:
+  - in: path
+    name: user_id
+    type: integer
+    required: true
+    description: ID of the user to retrieve
+    example: 1
+
+responses:
+  200:
+    description: User retrieved successfully
+    schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+
+        name:
+          type: string
+          example: Ali Abbas
+
+        email:
+          type: string
+          format: email
+          example: ali@example.com
+
+        phone_number:
+          type: string
+          example: "9876543210"
+
+  404:
+    description: User not found
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: User not found
+
+  500:
+    description: Database error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Database error occurred
